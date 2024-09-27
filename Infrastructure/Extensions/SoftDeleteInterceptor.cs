@@ -24,6 +24,7 @@ namespace Infrastructure.Extensions
                 string _userId = userContext.GetCurrentUser().Id;
 
 
+
                 if (eventData.Context is null)
                 {
                     return base.SavingChangesAsync(eventData, result, cancellationToken);
