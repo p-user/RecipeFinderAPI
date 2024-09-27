@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Infrastructure.Extensions;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,8 @@ namespace Application.Extensions
 
                 services.AddAutoMapper(Assembly.GetExecutingAssembly());
                 services.AddMediatR(cf => cf.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
-           
+                services.AddScoped<IUserContext, UserContext>();
+
 
         }
     }

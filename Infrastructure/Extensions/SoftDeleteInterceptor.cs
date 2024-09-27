@@ -21,7 +21,7 @@ namespace Infrastructure.Extensions
                 var scopedServiceProvider = scope.ServiceProvider;
                 var userContext = scopedServiceProvider.GetRequiredService<IUserContext>();
 
-                string _userId = userContext.GetUserId();
+                string _userId = userContext.GetCurrentUser().Id;
 
 
                 if (eventData.Context is null)

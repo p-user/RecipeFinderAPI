@@ -39,7 +39,7 @@ namespace Infrastructure.Extensions
             services.AddScoped<IRecipeIngredientRepository, RecipeIngredientRepository>();
             services.AddSingleton<UpdateAuditableInterceptor>();
             services.AddSingleton<SoftDeleteInterceptor>();
-            services.AddScoped<IUserContext, UserContext>();
+          
 
 
 

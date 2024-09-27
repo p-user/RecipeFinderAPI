@@ -64,7 +64,7 @@ namespace Infrastructure.Extensions
                 var scopedServiceProvider = scope.ServiceProvider;
                 var userContext = scopedServiceProvider.GetRequiredService<IUserContext>();
 
-                string _userId = userContext.GetUserId();
+                string _userId = userContext.GetCurrentUser().Id;
 
                 var users = context.ChangeTracker.Entries<ApplicationUser>().ToList();
                 foreach (EntityEntry<ApplicationUser> entry in users)
