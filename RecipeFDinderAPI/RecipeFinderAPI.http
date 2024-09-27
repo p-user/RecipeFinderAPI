@@ -1,0 +1,39 @@
+﻿@RecipeFinderAPI_HostAddress = https://localhost:7105
+
+GET {{RecipeFinderAPI_HostAddress}}/api/ingredient
+
+###
+
+GET {{RecipeFinderAPI_HostAddress}}/api/ingredient/{id}
+
+###
+
+PUT {{RecipeFinderAPI_HostAddress}}/api/ingredient/{id}
+Content-Type: application/json
+
+{
+  //IngredientDto
+}
+
+###
+
+PUT {{RecipeFinderAPI_HostAddress}}/api/recipe/{id}
+Content-Type: application/json
+
+{
+  //RecipeDto
+}
+
+###
+
+POST {{RecipeFinderAPI_HostAddress}}/api/Recipes/2170AC3A-CA65-4EF9-10B4-08DCDE06066C
+Content-Type: application/json
+
+{
+  "ingredientId": "2C3D80C6-81F7-440E-AE7A-08DCDE07A22A",
+  "recipeId": "2170AC3A-CA65-4EF9-10B4-08DCDE06066C",
+  "quantity": 20,
+  "unitId": "2170AC3A-CA65-4EF9-10B4-08DCDE06066C"
+}
+
+###
