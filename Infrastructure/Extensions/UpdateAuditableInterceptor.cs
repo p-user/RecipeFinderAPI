@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Application.Constants;
 
 namespace Infrastructure.Extensions
 {
@@ -64,7 +65,15 @@ namespace Infrastructure.Extensions
                 var scopedServiceProvider = scope.ServiceProvider;
                 var userContext = scopedServiceProvider.GetRequiredService<IUserContext>();
 
-                string _userId = userContext.GetCurrentUser().Id;
+                string _userId;
+
+                if (userContext.GetCurrentUser() is null)
+                {
+                    _userId = GlobalConstants.GuestUser;
+                }
+                else { 
+                _userId = userContext.GetCurrentUser().Id;
+                }
 
                 var users = context.ChangeTracker.Entries<ApplicationUser>().ToList();
                 foreach (EntityEntry<ApplicationUser> entry in users)

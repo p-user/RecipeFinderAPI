@@ -6,6 +6,6 @@ namespace Application.Users.AssignUserRole
 {
     public class AssignUserRoleCommand :IRequest<AssignUserRoleResponse>
     {
-       public UseRoleDto UserRoleDto { get; set; }
+       public UserRoleDto UserRoleDto { get; set; }
     }
 }

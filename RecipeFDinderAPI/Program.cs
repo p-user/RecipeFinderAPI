@@ -44,6 +44,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-//initialize db
+//initialize db and seed
 app.CreateDbIfNotExists();
 app.Run();

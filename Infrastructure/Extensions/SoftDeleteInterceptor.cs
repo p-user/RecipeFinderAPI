@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Domain.Enums;
+using Application.Constants;
 
 namespace Infrastructure.Extensions
 {
@@ -20,8 +21,17 @@ namespace Infrastructure.Extensions
             {
                 var scopedServiceProvider = scope.ServiceProvider;
                 var userContext = scopedServiceProvider.GetRequiredService<IUserContext>();
+                string _userId;
 
-                string _userId = userContext.GetCurrentUser().Id;
+                if (userContext.GetCurrentUser() is  null)
+                {
+                     _userId = GlobalConstants.GuestUser;
+                }
+                else
+                {
+                 _userId = userContext.GetCurrentUser().Id;
+
+                }
 
 
 

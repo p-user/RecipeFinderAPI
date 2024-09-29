@@ -1,5 +1,6 @@
 ﻿using Application.Constants;
 using Application.Dtos;
+using Application.Users.AddApplicationUserCommand;
 using Application.Users.AssignUserRole;
 using Application.Users.UnAssignUserRoleCommand;
 using Application.Users.UpdateUserDetailsCommand;
@@ -26,9 +27,9 @@ namespace RecipeFinderAPI.Controllers
         }
 
 
-        [HttpPost("userRole")]
+        [HttpPost("AssignUserRole")]
         [Authorize(Roles = GlobalConstants.AdminUser)]
-        public async Task<ActionResult> AssignUserRole([FromBody] UseRoleDto applicationUserDto)
+        public async Task<ActionResult> AssignUserRole([FromBody] UserRoleDto applicationUserDto)
         {
             var result  = await Mediator.Send(new AssignUserRoleCommand
             {
@@ -37,15 +38,27 @@ namespace RecipeFinderAPI.Controllers
             return Ok(result);
         }
 
-        [HttpDelete("userRole")]
+        [HttpDelete("UnassignUserRole")]
         [Authorize(Roles = GlobalConstants.AdminUser)]
-        public async Task<ActionResult> UnassignUserRole([FromBody] UseRoleDto command)
+        public async Task<ActionResult> UnassignUserRole([FromBody] UserRoleDto command)
         {
             var result = await Mediator.Send(new UnAssignUserRoleCommand
             {
                 UserRoleDto = command
             });
-            return NoContent();
+            return Ok(result);
+        }
+
+
+        [HttpPost("Register")]
+        [AllowAnonymous]
+        public async Task<ActionResult> AddUser([FromBody] UserRegistrationDto applicationUserDto)
+        {
+            var result = await Mediator.Send(new AddApplicatioUserCommand
+            {
+                UserRegistrationDto = applicationUserDto,
+            });
+            return Ok(result);
         }
     }
 }

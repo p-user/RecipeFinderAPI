@@ -27,7 +27,7 @@ namespace Infrastructure.Extensions
                         opt.AddInterceptors(sp.GetRequiredService<UpdateAuditableInterceptor>());
                     });
 
-            services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
                    .AddEntityFrameworkStores<ApiDbContext>()
                    .AddSignInManager<SignInManager<ApplicationUser>>()
                    .AddRoleManager<RoleManager<IdentityRole>>()
@@ -39,6 +39,7 @@ namespace Infrastructure.Extensions
             services.AddScoped<IRecipeIngredientRepository, RecipeIngredientRepository>();
             services.AddSingleton<UpdateAuditableInterceptor>();
             services.AddSingleton<SoftDeleteInterceptor>();
+            services.AddScoped<IUserContext, UserContext>();
           
 
 

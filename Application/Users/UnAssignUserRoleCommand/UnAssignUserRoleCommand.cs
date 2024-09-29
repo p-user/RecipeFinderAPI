@@ -10,6 +10,6 @@ namespace Application.Users.UnAssignUserRoleCommand
 {
     public class UnAssignUserRoleCommand : IRequest<UnAssignUserRoleResponse>
     {
-        public UseRoleDto UserRoleDto {  get; set; }
+        public UserRoleDto UserRoleDto {  get; set; }
     }
 }
