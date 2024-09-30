@@ -5,6 +5,8 @@ using Application.Features.Ingredient.Commands.UpdateIngredientForRecipeCommand;
 using Application.Features.Recipe.Queries.RecipeWithIngredientQuery;
 using Application.Features.Ingredient.Commands.CreateIngredientForRecipeCommand;
 using Application.Features.Ingredient.Commands.DeleteIngredientForRecipeCommand;
+using IdentityServer4.AccessTokenValidation;
+using Microsoft.AspNetCore.Authorization;
 
 namespace RecipeFinderAPI.Controllers
 {
@@ -14,6 +16,7 @@ namespace RecipeFinderAPI.Controllers
     {
 
         [HttpPost]
+        [Authorize]
         [ProducesResponseType(typeof(Guid), StatusCodes.Status201Created)]
         public async Task<ActionResult> CreateIngredientForRecipe([FromRoute] Guid RecipeId, [FromBody] RecipeIngredientBaseDto dto)
         {
@@ -30,6 +33,7 @@ namespace RecipeFinderAPI.Controllers
         }
 
         [HttpPatch("{id}")]
+        [Authorize]
         public async Task<ActionResult> UpdateIngredientForRecipe([FromRoute] Guid id, [FromRoute] Guid RecipeId, [FromBody] RecipeIngredientBaseDto dto)
         {
             if (RecipeId != dto.RecipeId)
@@ -47,6 +51,7 @@ namespace RecipeFinderAPI.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult> GetRecipeWithIngredients([FromRoute] Guid RecipeId)
         {
             var result = await Mediator.Send(new GetRecipeWithIngredientQuery()
@@ -59,6 +64,7 @@ namespace RecipeFinderAPI.Controllers
         }
 
         [HttpDelete("{IngredientId}")]
+        [Authorize]
         [ProducesResponseType(typeof(Guid), StatusCodes.Status204NoContent)]
         public async Task<ActionResult> DeleteIngredientForRecipe([FromRoute] Guid RecipeId, [FromRoute] Guid IngredientId)
         {

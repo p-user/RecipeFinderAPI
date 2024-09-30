@@ -27,11 +27,11 @@ namespace Infrastructure.Extensions
                         opt.AddInterceptors(sp.GetRequiredService<UpdateAuditableInterceptor>());
                     });
 
-            services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
-                   .AddEntityFrameworkStores<ApiDbContext>()
-                   .AddSignInManager<SignInManager<ApplicationUser>>()
-                   .AddRoleManager<RoleManager<IdentityRole>>()
-                   .AddDefaultTokenProviders();
+            services.AddIdentityApiEndpoints<ApplicationUser>()
+                      .AddRoles<IdentityRole>()
+                      .AddEntityFrameworkStores<ApiDbContext>();
+           
+                   
 
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddScoped<IRecipeRepository, RecipeRepository>();

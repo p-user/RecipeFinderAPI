@@ -1,8 +1,9 @@
-﻿using Application.Dtos;
+﻿using Application.Constants;
+using Application.Dtos;
 using Application.Features.Recipe.Commands.CreateRecipeCommand;
 using Application.Features.Recipe.Queries.GetRecipe;
 using Application.Features.Recipe.Queries.GetRecipes;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace RecipeFinderAPI.Controllers
@@ -12,6 +13,7 @@ namespace RecipeFinderAPI.Controllers
     public class RecipesController : BasicController
     {
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<GetRecipesResponse>> GetAllRecipes()
         {
             var result = await Mediator.Send(new GetRecipesQuery());
@@ -19,6 +21,7 @@ namespace RecipeFinderAPI.Controllers
         }
 
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<ActionResult<GetRecipesResponse>> GetRecipe([FromRoute] Guid id)
         {
             var result = await Mediator.Send(new GetRecipeQuery() { Id = id });
@@ -26,6 +29,7 @@ namespace RecipeFinderAPI.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<GetRecipeResponse>> CreateRecipe(RecipeDto dto)
         {
             var result = await Mediator.Send(new CreateRecipeCommand()
@@ -37,6 +41,7 @@ namespace RecipeFinderAPI.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<ActionResult<GetRecipeResponse>> UpdateRecipe([FromRoute] Guid id, [FromBody]RecipeDto dto)
         {
             var result = await Mediator.Send(new CreateRecipeCommand()

@@ -1,49 +1,47 @@
 using Application.Extensions;
+using Domain.Entities;
+using IdentityServer4.AccessTokenValidation;
 using Infrastructure.Extensions;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.OpenApi.Models;
+using RecipeFinderAPI.Extensions;
 using RecipeFinderAPI.Middlewares;
 using Serilog;
 using Serilog.Events;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<ErrorHandlingMiddleware>();//configure middleware
-builder.Services.AddHttpContextAccessor();
+builder.AddServices();
 
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
-builder.Host.UseSerilog((context, configuration) =>
-{
-    configuration.ReadFrom.Configuration(context.Configuration)
-    .Enrich.FromLogContext();
-
-
-});
 
 
 var app = builder.Build();
 
+
 // Configure the HTTP request pipeline.
+app.UseMiddleware<ErrorHandlingMiddleware>();
+app.UseSerilogRequestLogging();
+
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-app.UseMiddleware<ErrorHandlingMiddleware>(); //first 
-app.UseSerilogRequestLogging();
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
 
-app.MapControllers();
+app.MapGroup("api/identity").MapIdentityApi<ApplicationUser>();
+
+app.UseAuthorization();
 
 //initialize db and seed
 app.CreateDbIfNotExists();
+app.MapControllers();
 app.Run();

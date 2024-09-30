@@ -1,6 +1,5 @@
 ﻿using Application.Constants;
 using Application.Dtos;
-using Application.Users.AddApplicationUserCommand;
 using Application.Users.AssignUserRole;
 using Application.Users.UnAssignUserRoleCommand;
 using Application.Users.UpdateUserDetailsCommand;
@@ -50,15 +49,6 @@ namespace RecipeFinderAPI.Controllers
         }
 
 
-        [HttpPost("Register")]
-        [AllowAnonymous]
-        public async Task<ActionResult> AddUser([FromBody] UserRegistrationDto applicationUserDto)
-        {
-            var result = await Mediator.Send(new AddApplicatioUserCommand
-            {
-                UserRegistrationDto = applicationUserDto,
-            });
-            return Ok(result);
-        }
+        
     }
 }
