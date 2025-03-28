@@ -23,14 +23,7 @@ namespace Infrastructure.Repositories
 
         public void Delete(T entity)
         {
-            //if (entity is BaseEntity)
-            //{
-            //    var prop = entity.GetType().GetProperty("Status");
-            //    prop.SetValue(entity, Status.Disabled);
-            //    _context.Entry(entity).State = EntityState.Deleted;
-
-            //}
-            //else
+            
                 _entities.Remove(entity);
 
         }
